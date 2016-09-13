@@ -9,7 +9,7 @@ latex_theme=Darmstadt
 # colortheme: beaver,crane,dolphin,dove,fly,lily
 # monarca,seagull,seahorse,spruce,wolverine
 #latex_colortheme=dolphin
-latex_colortheme=dove
+latex_colortheme=wolverine
 
 # Put and select the .jpg's in images/, without suffix
 # e.g. earth, white, darkgray; mx6, orange, black
@@ -23,13 +23,13 @@ toc_number_fg=violet
 toc_section_bg=white
 toc_section_fg=orange
 
-latex_fontsize=9pt
+latex_fontsize=15pt
 #latex_template=./templates/zh_template.tex
 latex_template=./templates/lmullen.tex
 
 PDFS=$(SRC:.md=.pdf)
 HTML=$(SRC:.md=.html)
-IMGS=$(wildcard images/*.svg)
+IMGS=$(wildcard images/*.png)
 
 all: clean $(PDFS) $(HTML)
 
@@ -43,6 +43,7 @@ html: $(HTML)
 	sed '/^Notes:.*$//g' $< > $<.tmp
 	pandoc -t beamer --toc \
 	  --latex-engine=xelatex \
+	  --slide-level 2 \
 	  --template=$(latex_template) \
 	  -V titlepage_wallpaper:$(titlepage_wallpaper) \
 	  -V titlepage_titlefg:$(titlepage_titlefg) \
