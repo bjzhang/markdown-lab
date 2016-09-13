@@ -8,7 +8,8 @@ latex_theme=Darmstadt
 
 # colortheme: beaver,crane,dolphin,dove,fly,lily
 # monarca,seagull,seahorse,spruce,wolverine
-latex_colortheme=wolverine
+#latex_colortheme=dolphin
+latex_colortheme=dove
 
 # Put and select the .jpg's in images/, without suffix
 # e.g. earth, white, darkgray; mx6, orange, black
@@ -23,11 +24,12 @@ toc_section_bg=white
 toc_section_fg=orange
 
 latex_fontsize=9pt
-latex_template=./templates/zh_template.tex
+#latex_template=./templates/zh_template.tex
+latex_template=./templates/lmullen.tex
 
 PDFS=$(SRC:.md=.pdf)
 HTML=$(SRC:.md=.html)
-IMGS=$(wildcard images/*.jpg)
+IMGS=$(wildcard images/*.svg)
 
 all: clean $(PDFS) $(HTML)
 
@@ -37,7 +39,8 @@ html: $(HTML)
 
 %.pdf: %.md $(latex_template) $(IMGS)
 	@#sed -n ':a;1,5!{P;N;D;};N;ba' $< > tmp-$<
-	sed '/^# 致谢/,$$d' $< > $<.tmp
+#	sed '/^# 致谢/,$$d' $< > $<.tmp
+	sed '/^Notes:.*$//g' $< > $<.tmp
 	pandoc -t beamer --toc \
 	  --latex-engine=xelatex \
 	  --template=$(latex_template) \
